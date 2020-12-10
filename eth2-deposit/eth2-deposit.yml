@@ -1,0 +1,42 @@
+version: "3.4"
+services:  
+  deposit-cli-new:
+    restart: "no"
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    build:
+      context: ./
+      args:
+        - BUILD_TARGET=${DEPCLI_SRC_BUILD_TARGET}
+        - USER=${DEPCLI_USER}
+        - UID=${LOCAL_UID}
+    image: eth2.0-deposit-cli
+    volumes:
+      - ./:/var/lib/depcli-data
+    entrypoint:
+      - python3
+      - /app/eth2deposit/deposit.py
+      - new-mnemonic
+      - --folder
+      - /var/lib/depcli-data
+      - --chain
+      - ${NETWORK}
+  deposit-cli-existing:
+    restart: "no"
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    build:
+      context: ./
+      args:
+        - BUILD_TARGET=${DEPCLI_SRC_BUILD_TARGET}
+        - USER=${DEPCLI_USER}
+        - UID=${LOCAL_UID}
+    image: eth2.0-deposit-cli
+    volumes:
+      - ./:/var/lib/depcli-data
+    entrypoint:
+      - python3
+      - /app/eth2deposit/deposit.py
+      - existing-mnemonic
+      - --folder
+      - /var/lib/depcli-data
+      - --chain
+      - ${NETWORK}

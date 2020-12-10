@@ -1,0 +1,87 @@
+version: "3.4"
+services:
+  validator-import:
+    restart: "no"
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    image: lighthouse
+    build:
+      context: ./lighthouse
+      dockerfile: ${LH_DOCKERFILE}
+      args:
+        - BUILD_TARGET=${LH_SRC_BUILD_TARGET}
+        - USER=${LH_USER}
+        - UID=${LOCAL_UID}
+        - DOCKER_TAG=${LH_DOCKER_TAG}
+    volumes:
+      - lhvalidator-data:/var/lib/lighthouse
+      - ${DEPCLI_LOCALDIR}/validator_keys:/var/lib/lighthouse/validator_keys
+    entrypoint:
+      - query-lh-validator-passwords.sh
+      - lighthouse
+      - account
+      - validator
+      - import
+      - --datadir
+      - /var/lib/lighthouse
+      - --directory
+      - /var/lib/lighthouse/validator_keys
+      - --network
+      - ${NETWORK}
+      - --debug-level=${LOG_LEVEL}
+  validator-voluntary-exit:
+    restart: "no"
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    image: lighthouse
+    build:
+      context: ./lighthouse
+      dockerfile: ${LH_DOCKERFILE}
+      args:
+        - BUILD_TARGET=${LH_SRC_BUILD_TARGET}
+        - USER=${LH_USER}
+        - UID=${LOCAL_UID}
+        - DOCKER_TAG=${LH_DOCKER_TAG}
+    volumes:
+      - lhvalidator-data:/var/lib/lighthouse
+      - ${DEPCLI_LOCALDIR}/validator_keys:/var/lib/lighthouse/validator_keys
+    entrypoint:
+      - lighthouse
+      - account
+      - validator
+      - exit
+      - --beacon-node
+      - http://beacon:5052 
+      - --datadir
+      - /var/lib/lighthouse
+      - --network
+      - ${NETWORK}
+      - --debug-level=${LOG_LEVEL}
+      - --keystore
+    depends_on:
+      - beacon
+  validator-account:
+    restart: "no"
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    image: lighthouse
+    build:
+      context: ./lighthouse
+      dockerfile: ${LH_DOCKERFILE}
+      args:
+        - BUILD_TARGET=${LH_SRC_BUILD_TARGET}
+        - USER=${LH_USER}
+        - UID=${LOCAL_UID}
+        - DOCKER_TAG=${LH_DOCKER_TAG}
+    volumes:
+      - lhvalidator-data:/var/lib/lighthouse
+      - ${DEPCLI_LOCALDIR}:/interchange
+    entrypoint:
+      - lighthouse
+      - account
+      - validator
+      - --datadir
+      - /var/lib/lighthouse
+      - --network
+      - ${NETWORK}
+      - --debug-level=${LOG_LEVEL}
+volumes:
+  lhbeacon-data:
+  lhvalidator-data:

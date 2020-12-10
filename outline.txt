@@ -1,0 +1,58 @@
+SILO EACH MAJOR FUNCTION INTO SEPARATE DOCKER PROJECTS
+CONNECT ETHEREUM PROJECTS TOGETHER WITH SHARED DOCKER NETWORK
+GRAFANA CONNECTS TO ALL DOCKER NETWORKS!
+
+eth1-geth
+- geth
+- prometheus
+gethnet:
+
+eth2-deposit
+- deposit-cli
+
+eth2-lighthouse
+- lighthouse
+ * beacon
+ * validator (w/ easy cli access... maybe some example scripts for exit/import/etc)
+- prometheus
+lighthousenet:
++ gethnet:
+
+eth2-prysm
+- prysm
+- prometheus
+prysmnet:
++ gethnet:
+
+ipfs
+- ipfs
+- prometheus
+ipfsnet:
+
+hardware
+- node-exporter
+- prometheus
+host: # the node-exporter needs lower level access to be able to actually export everything
+
+rocketpool
+- validator
+- node
+- watchtower
+- api
+- prometheus?
+rocketpool_net:
++ gethnet:
++ lighthousenet:
++ prysmnet:
+
+grafana
+
+Audius???
+
+Band???
+
+websites (tmichael.info, cactap.us)
+- HTTP server
+
+git? https://radicle.xyz/ ???
+

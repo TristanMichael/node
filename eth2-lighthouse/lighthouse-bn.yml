@@ -1,0 +1,37 @@
+version: "3.4"
+services:
+  beacon:
+    restart: unless-stopped
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    build:
+      context: ./
+      dockerfile: Dockerfile.binary
+      args:
+        - USER=${LH_USER}
+        - UID=${LOCAL_UID}
+        - DOCKER_TAG=${LH_DOCKER_TAG}
+    image: lighthouse
+    volumes:
+      - lighthouse-bn-data:/var/lib/lighthouse
+    ports:
+      - ${LH_PORT}:${LH_PORT}/tcp
+      - ${LH_PORT}:${LH_PORT}/udp
+    expose:
+      - ${LH_HTTP_PORT}/tcp
+    entrypoint: 
+      - lighthouse
+      - bn
+      - --datadir
+      - /var/lib/lighthouse
+      - --http
+      - --http-address
+      - 0.0.0.0
+      - --network
+      - ${NETWORK}
+      - --port
+      - ${LH_PORT}
+      - --eth1-endpoints
+      - ${ETH1_NODE}
+      - --debug-level=${LOG_LEVEL}
+volumes:
+  lighthouse-bn-data:
