@@ -63,6 +63,8 @@ volumes:
     name: eth2-lighthouse-vc-${NETWORK}-data
 networks:
   eth2net:
+    name: eth2net
   eth1net:
+    name: eth1net
     external: true
   
