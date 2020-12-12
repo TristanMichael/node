@@ -15,7 +15,7 @@ services:
     volumes:
       - geth-data:/var/lib/goethereum
     networks:
-      - ethnet
+      - eth1net
     ports:
       - ${ETH1_PORT}:${ETH1_PORT}/tcp
       - ${ETH1_PORT}:${ETH1_PORT}/udp
