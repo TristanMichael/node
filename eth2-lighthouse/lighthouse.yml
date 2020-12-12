@@ -1,0 +1,68 @@
+version: "3.4"
+services:
+  beacon:
+    container_name: eth2-lighthouse-bn-${NETWORK}
+    restart: unless-stopped
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    build:
+      context: ./
+      dockerfile: Dockerfile.binary
+      args:
+        - USER=${LH_USER}
+        - UID=${LOCAL_UID}
+        - DOCKER_TAG=${LH_DOCKER_TAG}
+    image: lighthouse
+    volumes:
+      - lighthouse-bn-data:/var/lib/lighthouse
+    networks:
+      - eth2net
+    ports:
+      - ${LH_PORT}:${LH_PORT}/tcp
+      - ${LH_PORT}:${LH_PORT}/udp
+    expose:
+      - ${LH_HTTP_PORT}/tcp
+    entrypoint: 
+      - lighthouse
+      - bn
+      - --datadir=/var/lib/lighthouse
+      - --http
+      - --http-address=0.0.0.0
+      - --network=${NETWORK}
+      - --port=${LH_PORT}
+      - --eth1-endpoints=${ETH1_NODE}
+      - --debug-level=${LOG_LEVEL}
+  validator:
+    container_name: eth2-lighthouse-vc-${NETWORK}
+    restart: unless-stopped
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    build:
+      context: ./
+      dockerfile: Dockerfile.binary
+      args:
+        - USER=${LH_USER}
+        - UID=${LOCAL_UID}
+        - DOCKER_TAG=${LH_DOCKER_TAG}
+    image: lighthouse
+    volumes:
+      - lighthouse-vc-data:/var/lib/lighthouse
+    networks:
+      - eth1net
+      - eth2net
+    entrypoint:
+      - lighthouse
+      - validator
+      - --datadir=/var/lib/lighthouse
+      - --beacon-node=http://beacon:5052
+      - --graffiti=${GRAFFITI}
+      - --network=${NETWORK}
+      - --debug-level=${LOG_LEVEL}
+volumes:
+  lighthouse-bn-data:
+    name: eth2-lighthouse-bn-${NETWORK}-data
+  lighthouse-vc-data:
+    name: eth2-lighthouse-vc-${NETWORK}-data
+networks:
+  eth2net:
+  eth1net:
+    external: true
+  

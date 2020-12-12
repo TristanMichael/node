@@ -42,4 +42,4 @@ volumes:
   geth-data:
     name: eth1-geth-net${ETH1_NETWORK_ID}-data
 networks:
-  ethnet:
+  eth1net:
