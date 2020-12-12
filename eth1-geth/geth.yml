@@ -1,6 +1,7 @@
 version: "3.4"
 services:
   eth1:
+    container_name: eth1-geth-net${ETH1_NETWORK_ID}
     restart: unless-stopped
     user: ${LOCAL_UID}:${LOCAL_UID}
     build:
