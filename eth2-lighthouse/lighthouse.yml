@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.5"
 services:
   beacon:
     container_name: eth2-lighthouse-bn-${NETWORK}
