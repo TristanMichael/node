@@ -40,5 +40,6 @@ services:
       - --networkid=${ETH1_NETWORK_ID}
 volumes:
   geth-data:
+    name: eth1-geth-net${ETH1_NETWORK_ID}-data
 networks:
   ethnet:

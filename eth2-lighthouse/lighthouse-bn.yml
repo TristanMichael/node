@@ -1,6 +1,7 @@
 version: "3.4"
 services:
   beacon:
+    container_name: eth2-lighthouse-bn-${NETWORK}
     restart: unless-stopped
     user: ${LOCAL_UID}:${LOCAL_UID}
     build:
@@ -21,17 +22,12 @@ services:
     entrypoint: 
       - lighthouse
       - bn
-      - --datadir
-      - /var/lib/lighthouse
+      - --datadir=/var/lib/lighthouse
       - --http
-      - --http-address
-      - 0.0.0.0
-      - --network
-      - ${NETWORK}
-      - --port
-      - ${LH_PORT}
-      - --eth1-endpoints
-      - ${ETH1_NODE}
+      - --http-address=0.0.0.0
+      - --network=${NETWORK}
+      - --port=${LH_PORT}
+      - --eth1-endpoints=${ETH1_NODE}
       - --debug-level=${LOG_LEVEL}
 volumes:
   lighthouse-bn-data:
