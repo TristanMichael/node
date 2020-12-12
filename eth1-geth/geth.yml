@@ -25,18 +25,18 @@ services:
       - geth
       - --nousb
       - --http
-      - --http.addr 0.0.0.0
+      - --http.addr=0.0.0.0
       - --http.vhosts=eth1,localhost
-      - --http.api eth,net
-      - --datadir /var/lib/goethereum
-      - --port ${ETH1_PORT}
-      - --http.port ${ETH1_RPC_PORT}
+      - --http.api=eth,net
+      - --datadir=/var/lib/goethereum
+      - --port=${ETH1_PORT}
+      - --http.port=${ETH1_RPC_PORT}
       - --ws
-      - --ws.addr 0.0.0.0
-      - --ws.port ${ETH1_WS_PORT}
-      - --ws.api eth,net
-      - --ws.origins '*'
-      - --networkid ${ETH1_NETWORK_ID}
+      - --ws.addr=0.0.0.0
+      - --ws.port=${ETH1_WS_PORT}
+      - --ws.api=eth,net
+      - --ws.origins='*'
+      - --networkid=${ETH1_NETWORK_ID}
 volumes:
   geth-data:
 networks:
