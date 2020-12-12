@@ -11,7 +11,7 @@ services:
         - USER=${GETH_USER}
         - UID=${LOCAL_UID}
         - DOCKER_TAG=${GETH_DOCKER_TAG}
-    image: geth
+    image: node/geth
     volumes:
       - geth-data:/var/lib/goethereum
     networks:

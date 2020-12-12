@@ -11,7 +11,7 @@ services:
         - USER=${LH_USER}
         - UID=${LOCAL_UID}
         - DOCKER_TAG=${LH_DOCKER_TAG}
-    image: lighthouse
+    image: node/lighthouse
     volumes:
       - lighthouse-bn-data:/var/lib/lighthouse
     networks:
