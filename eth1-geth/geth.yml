@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   eth1:
-    container_name: eth1-geth-net${ETH1_NETWORK_ID}
+    container_name: eth1-geth-chain${ETH1_NETWORK_ID}
     restart: unless-stopped
     user: ${LOCAL_UID}:${LOCAL_UID}
     build:
@@ -40,7 +40,7 @@ services:
       - --networkid=${ETH1_NETWORK_ID}
 volumes:
   geth-data:
-    name: eth1-geth-net${ETH1_NETWORK_ID}-data
+    name: eth1-geth-chain${ETH1_NETWORK_ID}-data
 networks:
   eth1net:
-    name: eth1net
+    name: eth1-chain${ETH1_NETWORK_ID}-net
