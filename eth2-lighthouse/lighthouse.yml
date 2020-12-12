@@ -47,7 +47,6 @@ services:
     volumes:
       - lighthouse-vc-data:/var/lib/lighthouse
     networks:
-      - eth1net
       - eth2net
     entrypoint:
       - lighthouse
