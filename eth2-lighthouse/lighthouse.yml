@@ -15,6 +15,7 @@ services:
     volumes:
       - lighthouse-bn-data:/var/lib/lighthouse
     networks:
+      - eth1net
       - eth2net
     ports:
       - ${LH_PORT}:${LH_PORT}/tcp
