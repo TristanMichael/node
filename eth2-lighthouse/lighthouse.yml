@@ -1,17 +1,21 @@
 version: "3.5"
+
+x-common: &common
+  restart: unless-stopped
+  user: ${LOCAL_UID}:${LOCAL_UID}
+  build:
+    context: ./
+    dockerfile: Dockerfile.binary
+    args:
+      - USER=${LH_USER}
+      - UID=${LOCAL_UID}
+      - DOCKER_TAG=${LH_DOCKER_TAG}
+  image: node/lighthouse
+
 services:
   beacon:
     container_name: eth2-lighthouse-bn-${NETWORK}
-    restart: unless-stopped
-    user: ${LOCAL_UID}:${LOCAL_UID}
-    build:
-      context: ./
-      dockerfile: Dockerfile.binary
-      args:
-        - USER=${LH_USER}
-        - UID=${LOCAL_UID}
-        - DOCKER_TAG=${LH_DOCKER_TAG}
-    image: node/lighthouse
+    <<: *common
     volumes:
       - lighthouse-bn-data:/var/lib/lighthouse
     networks:
@@ -34,16 +38,7 @@ services:
       - --debug-level=${LOG_LEVEL}
   validator:
     container_name: eth2-lighthouse-vc-${NETWORK}
-    restart: unless-stopped
-    user: ${LOCAL_UID}:${LOCAL_UID}
-    build:
-      context: ./
-      dockerfile: Dockerfile.binary
-      args:
-        - USER=${LH_USER}
-        - UID=${LOCAL_UID}
-        - DOCKER_TAG=${LH_DOCKER_TAG}
-    image: node/lighthouse
+    <<: *common
     volumes:
       - lighthouse-vc-data:/var/lib/lighthouse
     networks:
@@ -56,11 +51,13 @@ services:
       - --graffiti=${GRAFFITI}
       - --network=${NETWORK}
       - --debug-level=${LOG_LEVEL}
+
 volumes:
   lighthouse-bn-data:
     name: eth2-lighthouse-bn-${NETWORK}-data
   lighthouse-vc-data:
     name: eth2-lighthouse-vc-${NETWORK}-data
+    
 networks:
   eth2net:
     name: eth2-${NETWORK}-net
