@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   eth1:
-    container_name: eth1-geth-chain${ETH1_NETWORK_ID}
+    container_name: eth1-geth-${ETH1_NETWORK}
     restart: unless-stopped
     user: ${LOCAL_UID}:${LOCAL_UID}
     build:
@@ -24,6 +24,7 @@ services:
       - ${ETH1_WS_PORT}/tcp
     entrypoint:
       - geth
+      - ${ETH1_NETWORK_FLAG}
       - --nousb
       - --http
       - --http.addr=0.0.0.0
@@ -37,10 +38,9 @@ services:
       - --ws.port=${ETH1_WS_PORT}
       - --ws.api=eth,net
       - --ws.origins='*'
-      - --networkid=${ETH1_NETWORK_ID}
 volumes:
   geth-data:
-    name: eth1-geth-chain${ETH1_NETWORK_ID}-data
+    name: eth1-geth-${ETH1_NETWORK}-data
 networks:
   eth1net:
-    name: eth1-chain${ETH1_NETWORK_ID}-net
+    name: eth1-${ETH1_NETWORK}-net
