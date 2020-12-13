@@ -24,21 +24,21 @@ services:
       - ${ETH1_WS_PORT}/tcp
     entrypoint:
       - geth
+      - --networkid=${ETH1_NETWORK_ID}
+      - --port=${ETH1_PORT}
       - --nousb
       - --http
       - --http.addr=0.0.0.0
       - --http.vhosts=eth1,localhost
       - --http.api=eth,net
       - --datadir=/var/lib/goethereum
-      - --port
-      - ${ETH1_PORT}
       - --http.port=${ETH1_RPC_PORT}
       - --ws
       - --ws.addr=0.0.0.0
       - --ws.port=${ETH1_WS_PORT}
       - --ws.api=eth,net
       - --ws.origins='*'
-      - --networkid=${ETH1_NETWORK_ID}
+      
 volumes:
   geth-data:
     name: eth1-geth-chain${ETH1_NETWORK_ID}-data
