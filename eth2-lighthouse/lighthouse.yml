@@ -14,7 +14,7 @@ x-common: &common
 
 services:
   beacon:
-    container_name: eth2-lighthouse-bn-${NETWORK}
+    container_name: eth2-lighthouse-bn-${ETH2_NETWORK}
     <<: *common
     volumes:
       - lighthouse-bn-data:/var/lib/lighthouse
@@ -32,12 +32,12 @@ services:
       - --datadir=/var/lib/lighthouse
       - --http
       - --http-address=0.0.0.0
-      - --network=${NETWORK}
+      - --network=${ETH2_NETWORK}
       - --port=${LH_PORT}
       - --eth1-endpoints=${ETH1_NODE}
       - --debug-level=${LOG_LEVEL}
   validator:
-    container_name: eth2-lighthouse-vc-${NETWORK}
+    container_name: eth2-lighthouse-vc-${ETH2_NETWORK}
     <<: *common
     volumes:
       - lighthouse-vc-data:/var/lib/lighthouse
@@ -49,19 +49,19 @@ services:
       - --datadir=/var/lib/lighthouse
       - --beacon-node=http://beacon:5052
       - --graffiti=${GRAFFITI}
-      - --network=${NETWORK}
+      - --network=${ETH2_NETWORK}
       - --debug-level=${LOG_LEVEL}
 
 volumes:
   lighthouse-bn-data:
-    name: eth2-lighthouse-bn-${NETWORK}-data
+    name: eth2-lighthouse-bn-${ETH2_NETWORK}-data
   lighthouse-vc-data:
-    name: eth2-lighthouse-vc-${NETWORK}-data
+    name: eth2-lighthouse-vc-${ETH2_NETWORK}-data
     
 networks:
   eth2net:
-    name: eth2-${NETWORK}-net
+    name: eth2-${ETH2_NETWORK}-net
   eth1net:
-    name: eth1-chain${ETH1_NETWORK_ID}-net
+    name: eth1-${ETH1_NETWORK}-net
     external: true
   
