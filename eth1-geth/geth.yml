@@ -37,7 +37,7 @@ services:
       - --ws.port=${ETH1_WS_PORT}
       - --ws.api=eth,net
       - --ws.origins='*'
-      - ${ETH1_NETWORK_FLAG}
+    command: ${ETH1_NETWORK_FLAG}
 volumes:
   geth-data:
     name: ${COMPOSE_PROJECT_NAME}-data
