@@ -16,7 +16,12 @@ services:
       - geth-data:/var/lib/goethereum
     networks:
       - eth1net
-
+    ports:
+      - ${ETH1_PORT}:${ETH1_PORT}/tcp
+      - ${ETH1_PORT}:${ETH1_PORT}/udp
+    expose:
+      - ${ETH1_RPC_PORT}/tcp
+      - ${ETH1_WS_PORT}/tcp
     entrypoint:
       - geth
       - --nousb
@@ -25,7 +30,8 @@ services:
       - --http.vhosts=eth1,localhost
       - --http.api=eth,net
       - --datadir=/var/lib/goethereum
-      - --port=${ETH1_PORT}
+      - --port
+      - ${ETH1_PORT}
       - --http.port=${ETH1_RPC_PORT}
       - --ws
       - --ws.addr=0.0.0.0
