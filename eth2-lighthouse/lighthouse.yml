@@ -14,7 +14,7 @@ x-common: &common
 
 services:
   beacon:
-    container_name: eth2-lighthouse-bn-${ETH2_NETWORK}
+    container_name: ${COMPOSE_PROJECT_NAME}-bn
     <<: *common
     volumes:
       - lighthouse-bn-data:/var/lib/lighthouse
@@ -37,7 +37,7 @@ services:
       - --eth1-endpoints=${ETH1_NODE}
       - --debug-level=${LOG_LEVEL}
   validator:
-    container_name: eth2-lighthouse-vc-${ETH2_NETWORK}
+    container_name: ${COMPOSE_PROJECT_NAME}-vc
     <<: *common
     volumes:
       - lighthouse-vc-data:/var/lib/lighthouse
@@ -54,14 +54,14 @@ services:
 
 volumes:
   lighthouse-bn-data:
-    name: eth2-lighthouse-bn-${ETH2_NETWORK}-data
+    name: ${COMPOSE_PROJECT_NAME}-bn-data
   lighthouse-vc-data:
-    name: eth2-lighthouse-vc-${ETH2_NETWORK}-data
+    name: ${COMPOSE_PROJECT_NAME}-vc-data
     
 networks:
   eth2net:
-    name: eth2-${ETH2_NETWORK}-net
+    name: ${COMPOSE_PROJECT_NAME}-net
   eth1net:
-    name: eth1-${ETH1_NETWORK}-net
+    name: ${ETH1_PROJECT_NAME}-net
     external: true
   
