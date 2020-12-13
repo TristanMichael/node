@@ -25,12 +25,12 @@ services:
     entrypoint:
       - geth
       - --nousb
+      - --port=${ETH1_PORT}
+      - --datadir=/var/lib/goethereum
       - --http
       - --http.addr=0.0.0.0
       - --http.vhosts=eth1,localhost
       - --http.api=eth,net
-      - --datadir=/var/lib/goethereum
-      - --port=${ETH1_PORT}
       - --http.port=${ETH1_RPC_PORT}
       - --ws
       - --ws.addr=0.0.0.0
