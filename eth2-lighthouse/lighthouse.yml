@@ -32,7 +32,8 @@ services:
       - --http
       - --http-address=0.0.0.0
       - --http-port=${LH_HTTP_PORT}
-      - --http-allow-origin="*"
+      - --http-allow-origin
+      - '*'
       - --network=${ETH2_NETWORK}
       - --port=${LH_PORT}
       - --discovery-port=${LH_PORT}
