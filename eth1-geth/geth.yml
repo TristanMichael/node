@@ -12,6 +12,8 @@ services:
         - UID=${LOCAL_UID}
         - DOCKER_TAG=${GETH_DOCKER_TAG}
     image: node/geth
+    stop_signal: SIGINT
+    stop_grace_period: 2m
     volumes:
       - geth-data:/var/lib/goethereum
     networks:
@@ -19,9 +21,8 @@ services:
     ports:
       - ${ETH1_PORT}:${ETH1_PORT}/tcp
       - ${ETH1_PORT}:${ETH1_PORT}/udp
-    expose:
-      - ${ETH1_RPC_PORT}/tcp
-      - ${ETH1_WS_PORT}/tcp
+      - 127.0.0.1:${ETH1_WS_PORT}:${ETH1_WS_PORT}/tcp
+      - 127.0.0.1:${ETH1_RPC_PORT}/tcp
     entrypoint:
       - geth
       - --nousb
