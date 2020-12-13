@@ -31,7 +31,7 @@ services:
       - --datadir=/var/lib/lighthouse
       - --http
       - --http-address=0.0.0.0
-      - --http-allow-origin '*'
+      - --http-allow-origin='*'
       - --network=${ETH2_NETWORK}
       - --port=${LH_PORT}
       - --eth1-endpoints=${ETH1_NODE}
