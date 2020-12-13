@@ -24,7 +24,7 @@ services:
       - ${ETH1_WS_PORT}/tcp
     entrypoint:
       - geth
-      - --networkid=${ETH1_NETWORK_ID}
+      - --goerli #networkid=${ETH1_NETWORK_ID}
       - --port=${ETH1_PORT}
       - --nousb
       - --http
