@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   eth1:
-    container_name: eth1-geth-${ETH1_NETWORK}
+    container_name: ${COMPOSE_PROJECT_NAME}
     restart: unless-stopped
     user: ${LOCAL_UID}:${LOCAL_UID}
     build:
@@ -40,7 +40,7 @@ services:
       - --ws.origins='*'
 volumes:
   geth-data:
-    name: eth1-geth-${ETH1_NETWORK}-data
+    name: ${COMPOSE_PROJECT_NAME}-data
 networks:
   eth1net:
-    name: eth1-${ETH1_NETWORK}-net
+    name: ${COMPOSE_PROJECT_NAME}-net
