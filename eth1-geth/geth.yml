@@ -22,7 +22,7 @@ services:
       - ${ETH1_PORT}:${ETH1_PORT}/tcp
       - ${ETH1_PORT}:${ETH1_PORT}/udp
       - 127.0.0.1:${ETH1_WS_PORT}:${ETH1_WS_PORT}/tcp
-      - 127.0.0.1:${ETH1_RPC_PORT}/tcp
+      - 127.0.0.1:${ETH1_RPC_PORT}:${ETH1_RPC_PORT}/tcp
     entrypoint:
       - geth
       - --nousb
