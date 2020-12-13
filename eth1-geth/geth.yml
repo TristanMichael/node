@@ -37,7 +37,7 @@ services:
       - --ws.addr=0.0.0.0
       - --ws.port=${ETH1_WS_PORT}
       - --ws.api=eth,net
-      - --ws.origins='*'
+      - --ws.origins=*
     command: ${ETH1_NETWORK_FLAG}
 volumes:
   geth-data:
