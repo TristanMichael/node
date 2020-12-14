@@ -20,6 +20,8 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     expose:
       - 8080/tcp
+    networks:
+      - grafananet      
   node-prometheus:
     container_name: ${COMPOSE_PROJECT_NAME}-prometheus
     restart: unless-stopped
@@ -39,6 +41,7 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
     depends_on:
       - node-exporter
+      - cadvisor
 
 volumes:
   node-prometheus-data:
