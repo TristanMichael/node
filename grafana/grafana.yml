@@ -10,7 +10,9 @@ services:
     ports: 
       - 127.0.0.1:${GRAFANA_PORT}:${GRAFANA_PORT}/tcp
     networks:
-      - grafananet 
+      - grafananet
+      - eth1net
+      - eth2net
 
 volumes:
   grafana-data:

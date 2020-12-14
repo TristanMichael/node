@@ -2,7 +2,6 @@ version: "3.5"
 
 services:  
   node-exporter:
-    pid: host    
     container_name: ${COMPOSE_PROJECT_NAME}-node
     restart: unless-stopped
     image: prom/node-exporter
@@ -10,12 +9,10 @@ services:
       - '/:/host:ro,rslave'
     expose:
       - 9100/tcp
-    network_mode: host
     networks:
       - grafananet
     command:
       - --path.rootfs=/host
-
   node-prometheus:
     container_name: ${COMPOSE_PROJECT_NAME}-prometheus
     restart: unless-stopped
