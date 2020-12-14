@@ -23,6 +23,8 @@ services:
       - ${ETH1_PORT}:${ETH1_PORT}/udp
       - 127.0.0.1:${ETH1_WS_PORT}:${ETH1_WS_PORT}/tcp
       - 127.0.0.1:${ETH1_RPC_PORT}:${ETH1_RPC_PORT}/tcp
+    expose:
+      - 6060/tcp      
     entrypoint:
       - geth
       - --nousb
@@ -38,6 +40,10 @@ services:
       - --ws.port=${ETH1_WS_PORT}
       - --ws.api=eth,net
       - --ws.origins=*
+      - --metrics 
+      - --metrics.expensive 
+      - --pprof 
+      - --pprof.addr=0.0.0.0
     command: ${ETH1_NETWORK_FLAG}
 volumes:
   geth-data:
