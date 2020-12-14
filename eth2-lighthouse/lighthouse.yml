@@ -5,7 +5,7 @@ x-common: &common
   user: ${LOCAL_UID}:${LOCAL_UID}
   build:
     context: ./
-    dockerfile: Dockerfile.binary
+    dockerfile: Lighthouse.Dockerfile
     args:
       - USER=${LH_USER}
       - UID=${LOCAL_UID}
@@ -62,11 +62,34 @@ services:
       - --metrics
       - --metrics-address=0.0.0.0
 
+  eth2-prometheus:
+    container_name: ${COMPOSE_PROJECT_NAME}-prometheus
+    restart: unless-stopped
+    image: prom/prometheus
+    volumes:
+      - lighthouse-prometheus-data:/prometheus
+      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml
+    expose:
+      - 9090/tcp
+    networks:
+      - eth2net
+    entrypoint:
+      - /bin/prometheus
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --config.file=/etc/prometheus/prometheus.yml
+    depends_on:
+      - beacon
+      - validator
+
 volumes:
   lighthouse-bn-data:
     name: ${COMPOSE_PROJECT_NAME}-bn-data
   lighthouse-vc-data:
     name: ${COMPOSE_PROJECT_NAME}-vc-data
+  lighthouse-prometheus-data:
+    name: ${COMPOSE_PROJECT_NAME}-prometheus-data
     
 networks:
   eth2net:

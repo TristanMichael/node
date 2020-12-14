@@ -1,12 +1,13 @@
 version: "3.5"
 services:
+
   eth1:
     container_name: ${COMPOSE_PROJECT_NAME}
     restart: unless-stopped
     user: ${LOCAL_UID}:${LOCAL_UID}
     build:
       context: ./
-      dockerfile: Dockerfile.binary
+      dockerfile: Geth.DockerFile
       args:
         - USER=${GETH_USER}
         - UID=${LOCAL_UID}
@@ -45,9 +46,33 @@ services:
       - --pprof 
       - --pprof.addr=0.0.0.0
     command: ${ETH1_NETWORK_FLAG}
+
+  eth1-prometheus:
+    container_name: ${COMPOSE_PROJECT_NAME}-prometheus
+    restart: unless-stopped
+    image: prom/prometheus
+    volumes:
+      - geth-prometheus-data:/prometheus
+      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml
+    expose:
+      - 9090/tcp
+    networks:
+      - eth1net
+    entrypoint:
+      - /bin/prometheus
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --config.file=/etc/prometheus/prometheus.yml
+    depends_on:
+      - eth1
+
 volumes:
   geth-data:
     name: ${COMPOSE_PROJECT_NAME}-data
+  geth-prometheus-data:
+    name: ${COMPOSE_PROJECT_NAME}-prometheus-data
+
 networks:
   eth1net:
     name: ${COMPOSE_PROJECT_NAME}-net
