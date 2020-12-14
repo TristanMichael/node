@@ -5,14 +5,21 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-node
     restart: unless-stopped
     image: prom/node-exporter
-    volumes:
-      - '/:/host:ro,rslave'
     expose:
       - 9100/tcp
     networks:
       - grafananet
-    command:
-      - --path.rootfs=/host
+  cadvisor:
+    container_name: ${COMPOSE_PROJECT_NAME}-cadvisor
+    restart: unless-stopped
+    image: google/cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    expose:
+      - 8080/tcp
   node-prometheus:
     container_name: ${COMPOSE_PROJECT_NAME}-prometheus
     restart: unless-stopped
