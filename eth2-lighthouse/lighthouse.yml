@@ -25,6 +25,8 @@ services:
       - ${LH_PORT}:${LH_PORT}/tcp
       - ${LH_PORT}:${LH_PORT}/udp
       - 127.0.0.1:${LH_HTTP_PORT}:${LH_HTTP_PORT}/tcp
+    expose:
+      - 5054/tcp
     entrypoint: 
       - lighthouse
       - bn
@@ -38,6 +40,8 @@ services:
       - --discovery-port=${LH_PORT}
       - --eth1-endpoints=${ETH1_NODE}
       - --debug-level=${LOG_LEVEL}
+      - --metrics
+      - --metrics-address=0.0.0.0      
   validator:
     container_name: ${COMPOSE_PROJECT_NAME}-vc
     <<: *common
@@ -45,6 +49,8 @@ services:
       - lighthouse-vc-data:/var/lib/lighthouse
     networks:
       - eth2net
+    expose:
+      - 5064/tcp      
     entrypoint:
       - lighthouse
       - validator
@@ -53,6 +59,8 @@ services:
       - --graffiti=${GRAFFITI}
       - --network=${ETH2_NETWORK}
       - --debug-level=${LOG_LEVEL}
+      - --metrics
+      - --metrics-address=0.0.0.0
 
 volumes:
   lighthouse-bn-data:
