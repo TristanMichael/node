@@ -8,8 +8,12 @@ services:
     image: prom/node-exporter
     expose:
       - 9100/tcp
+    volumes:
+      - /:/host:ro,rslave
     networks:
       - grafananet
+    command:
+      - --path.rootfs=/host
   cadvisor:
     container_name: ${COMPOSE_PROJECT_NAME}-cadvisor
     privileged: true
