@@ -42,7 +42,7 @@ services:
       - --ws.api=eth,net
       - --ws.origins=*
       - --metrics 
-      - --metrics.expensive 
+#      - --metrics.expensive
       - --pprof 
       - --pprof.addr=0.0.0.0
     command: ${ETH1_NETWORK_FLAG}

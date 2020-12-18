@@ -51,8 +51,5 @@ Audius???
 
 Band???
 
-websites (tmichael.info, cactap.us)
-- HTTP server
-
 git? https://radicle.xyz/ ???
 
