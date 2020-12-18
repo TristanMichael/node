@@ -6,10 +6,10 @@ global:
 alerting:
   alertmanagers:
   - static_configs:
-    - targets:
+    - targets: []
       # - alertmanager:9093
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-rule_files:
+rule_files: []
   # - "first_rules.yml"
   # - "second_rules.yml"
 # A scrape configuration containing beacon node and node exporter

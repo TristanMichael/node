@@ -31,6 +31,10 @@ services:
       - --nousb
       - --port=${ETH1_PORT}
       - --datadir=/var/lib/goethereum
+      - --metrics
+      - --metrics.expensive      
+      - --pprof 
+      - --pprofaddr=0.0.0.0
       - --http
       - --http.addr=0.0.0.0
       - --http.vhosts=eth1,localhost
@@ -41,8 +45,6 @@ services:
       - --ws.port=${ETH1_WS_PORT}
       - --ws.api=eth,net
       - --ws.origins=*
-      - --metrics
-      - --metrics.expensive
     command: ${ETH1_NETWORK_FLAG}
 
   eth1-prometheus:
