@@ -5,7 +5,6 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-node
 #    privileged: true
     restart: unless-stopped
-    init: true
     image: prom/node-exporter
     expose:
       - 9100/tcp

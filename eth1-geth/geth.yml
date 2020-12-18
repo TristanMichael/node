@@ -4,7 +4,6 @@ services:
   eth1:
     container_name: ${COMPOSE_PROJECT_NAME}
     restart: unless-stopped
-    init: true
     user: ${LOCAL_UID}:${LOCAL_UID}
     build:
       context: ./
@@ -51,7 +50,6 @@ services:
   eth1-prometheus:
     container_name: ${COMPOSE_PROJECT_NAME}-prometheus
     restart: unless-stopped
-    init: true
     image: prom/prometheus
     volumes:
       - geth-prometheus-data:/prometheus
