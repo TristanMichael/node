@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
     image: prom/prometheus
     volumes:
-      - lighthouse-prometheus-data:/prometheus
+      - teku-prometheus-data:/prometheus
       - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml
     expose:
       - 9090/tcp
