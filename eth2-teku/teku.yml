@@ -9,9 +9,9 @@ services:
       context: ./
       dockerfile: Teku.Dockerfile
       args:
-        - USER=${LH_USER}
+        - USER=${TEKU_USER}
         - UID=${LOCAL_UID}
-        - DOCKER_TAG=${LH_DOCKER_TAG}
+        - DOCKER_TAG=${TEKU_DOCKER_TAG}
     image: node/teku
     environment:
       - JAVA_OPTS=${TEKU_LOW_MEM}
