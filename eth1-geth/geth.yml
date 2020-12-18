@@ -7,7 +7,7 @@ services:
     user: ${LOCAL_UID}:${LOCAL_UID}
     build:
       context: ./
-      dockerfile: Geth.DockerFile
+      dockerfile: Geth.Dockerfile
       args:
         - USER=${GETH_USER}
         - UID=${LOCAL_UID}
