@@ -14,7 +14,7 @@ x-common: &common
 
 services:
   beacon:
-    container_name: ${COMPOSE_PROJECT_NAME}-bn
+    container_name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}-bn
     <<: *common
     volumes:
       - lighthouse-bn-data:/var/lib/lighthouse
@@ -43,7 +43,7 @@ services:
       - --metrics
       - --metrics-address=0.0.0.0      
   validator:
-    container_name: ${COMPOSE_PROJECT_NAME}-vc
+    container_name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}-vc
     <<: *common
     volumes:
       - lighthouse-vc-data:/var/lib/lighthouse
@@ -85,12 +85,12 @@ services:
 
 volumes:
   lighthouse-bn-data:
-    name: ${COMPOSE_PROJECT_NAME}-bn-data
+    name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}-bn-data
   lighthouse-vc-data:
-    name: ${COMPOSE_PROJECT_NAME}-vc-data
+    name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}-vc-data
   lighthouse-prometheus-data:
-    name: ${COMPOSE_PROJECT_NAME}-prometheus-data
-    
+    name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}-prometheus-data
+
 networks:
   eth2net:
     name: ${COMPOSE_PROJECT_NAME}-net

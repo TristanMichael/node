@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   beacon:
-    container_name: ${COMPOSE_PROJECT_NAME}
+    container_name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}
     restart: unless-stopped
     user: ${LOCAL_UID}:${LOCAL_UID}
     build:
@@ -63,9 +63,9 @@ services:
 
 volumes:
   teku-data:
-    name: ${COMPOSE_PROJECT_NAME}-data
+    name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}-data
   teku-prometheus-data:
-    name: ${COMPOSE_PROJECT_NAME}-prometheus-data
+    name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}-prometheus-data
     
 networks:
   eth2net:
