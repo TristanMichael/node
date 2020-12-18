@@ -3,7 +3,7 @@ version: "3.5"
 services:  
   node-exporter:
     container_name: ${COMPOSE_PROJECT_NAME}-node
-#    privileged: true
+    privileged: true
     restart: unless-stopped
     image: prom/node-exporter
     expose:
