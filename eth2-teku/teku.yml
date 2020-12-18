@@ -1,0 +1,76 @@
+version: "3.5"
+
+services:
+  beacon:
+    container_name: ${COMPOSE_PROJECT_NAME}
+    restart: unless-stopped
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    build:
+      context: ./
+      dockerfile: Teku.Dockerfile
+      args:
+        - USER=${LH_USER}
+        - UID=${LOCAL_UID}
+        - DOCKER_TAG=${LH_DOCKER_TAG}
+    image: node/teku
+    environment:
+      - JAVA_OPTS=${TEKU_LOW_MEM}
+    volumes:
+      - teku-data:/var/lib/teku
+    networks:
+      - eth1net
+      - eth2net
+    ports:
+      - ${TEKU_PORT}:${TEKU_PORT}/tcp
+      - ${TEKU_PORT}:${TEKU_PORT}/udp
+    expose:
+      - 8008/tcp      
+    entrypoint: 
+      - /opt/teku/bin/teku
+      - --data-path=/var/lib/teku
+      - --log-destination=CONSOLE
+      - --network=${ETH2_NETWORK}
+      - --eth1-endpoint=${ETH1_NODE}
+      - --p2p-port=${TEKU_PORT}
+      - --validators-keystore-locking-enabled=true
+      - --validator-keys=/var/lib/teku/validator-keys:/var/lib/teku/validator-passwords
+      - --validators-graffiti=${GRAFFITI}
+      - --logging=${LOG_LEVEL}
+      - --metrics-enabled=true
+      - --metrics-port=8008
+      - --metrics-interface=0.0.0.0
+      - --metrics-host-allowlist=*      
+
+  eth2-prometheus:
+    container_name: ${COMPOSE_PROJECT_NAME}-prometheus
+    restart: unless-stopped
+    image: prom/prometheus
+    volumes:
+      - lighthouse-prometheus-data:/prometheus
+      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml
+    expose:
+      - 9090/tcp
+    networks:
+      - eth2net
+    entrypoint:
+      - /bin/prometheus
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --config.file=/etc/prometheus/prometheus.yml
+    depends_on:
+      - beacon
+
+volumes:
+  teku-data:
+    name: ${COMPOSE_PROJECT_NAME}-data
+  teku-prometheus-data:
+    name: ${COMPOSE_PROJECT_NAME}-prometheus-data
+    
+networks:
+  eth2net:
+    name: ${COMPOSE_PROJECT_NAME}-net
+  eth1net:
+    name: ${ETH1_PROJECT_NAME}-net
+    external: true
+  
