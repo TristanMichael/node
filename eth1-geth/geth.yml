@@ -31,7 +31,7 @@ services:
       - --nousb
       - --port=${ETH1_PORT}
       - --datadir=/var/lib/goethereum
-      - --maxpeers=20
+      - --maxpeers=25
       - --metrics
       - --metrics.expensive
       - --pprof 
