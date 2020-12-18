@@ -3,7 +3,7 @@ version: "3.5"
 services:  
   node-exporter:
     container_name: ${COMPOSE_PROJECT_NAME}-node
-    privileged: true
+#    privileged: true
     restart: unless-stopped
     image: prom/node-exporter
     networks:
@@ -22,14 +22,14 @@ services:
 
   cadvisor:
     container_name: ${COMPOSE_PROJECT_NAME}-cadvisor
-    privileged: true
+#    privileged: true
     restart: unless-stopped
     image: google/cadvisor
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
       - /sys:/sys:ro
-#      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     expose:
       - 8080/tcp
