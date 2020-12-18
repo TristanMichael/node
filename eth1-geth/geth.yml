@@ -41,7 +41,7 @@ services:
       - --ws.port=${ETH1_WS_PORT}
       - --ws.api=eth,net
       - --ws.origins=*
-      - --metrics 
+      - --metrics
       - --metrics.expensive
     command: ${ETH1_NETWORK_FLAG}
 
