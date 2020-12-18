@@ -1,0 +1,51 @@
+version: "3.5"
+
+services:  
+  node-exporter:
+    container_name: ${COMPOSE_PROJECT_NAME}-node
+#    privileged: true
+    restart: unless-stopped
+    image: prom/node-exporter
+    expose:
+      - 9100/tcp
+    networks:
+      - grafananet
+  cadvisor:
+    container_name: ${COMPOSE_PROJECT_NAME}-cadvisor
+    privileged: true
+    restart: unless-stopped
+    image: google/cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+#      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    expose:
+      - 8080/tcp
+    networks:
+      - grafananet      
+  node-prometheus:
+    container_name: ${COMPOSE_PROJECT_NAME}-prometheus
+    restart: unless-stopped
+    image: prom/prometheus
+    volumes:
+      - node-prometheus-data:/prometheus
+      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml
+    expose:
+      - 9090/tcp
+    networks:
+      - grafananet
+    entrypoint:
+      - /bin/prometheus
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      - --config.file=/etc/prometheus/prometheus.yml
+    depends_on:
+      - node-exporter
+      - cadvisor
+
+volumes:
+  node-prometheus-data:
+    name: ${COMPOSE_PROJECT_NAME}-prometheus-data

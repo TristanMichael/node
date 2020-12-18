@@ -1,0 +1,29 @@
+version: "3.5"
+
+services:
+  grafana:
+    container_name: ${COMPOSE_PROJECT_NAME}
+    restart: unless-stopped
+    image: grafana/grafana
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports: 
+      - 127.0.0.1:${GRAFANA_PORT}:${GRAFANA_PORT}/tcp
+    networks:
+      - grafananet
+      - eth1net
+      - eth2net
+
+volumes:
+  grafana-data:
+    name: ${COMPOSE_PROJECT_NAME}-data
+
+networks:
+  grafananet:
+    name: ${COMPOSE_PROJECT_NAME}-net
+  eth1net:
+    name: ${ETH1_PROJECT_NAME}-net
+    external: true
+  eth2net:
+    name: ${ETH2_PROJECT_NAME}-net
+    external: true
