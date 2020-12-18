@@ -4,6 +4,7 @@ services:
   grafana:
     container_name: ${COMPOSE_PROJECT_NAME}
     restart: unless-stopped
+    init: true
     image: grafana/grafana
     volumes:
       - grafana-data:/var/lib/grafana
