@@ -22,7 +22,7 @@ services:
 
   cadvisor:
     container_name: ${COMPOSE_PROJECT_NAME}-cadvisor
-#    privileged: true
+    privileged: true
     restart: unless-stopped
     image: google/cadvisor
     volumes:
