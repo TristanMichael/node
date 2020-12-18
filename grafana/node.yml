@@ -6,10 +6,19 @@ services:
 #    privileged: true
     restart: unless-stopped
     image: prom/node-exporter
-    expose:
-      - 9100/tcp
     networks:
       - grafananet
+    expose:
+      - 9100/tcp
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command: 
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
   cadvisor:
     container_name: ${COMPOSE_PROJECT_NAME}-cadvisor
     privileged: true
@@ -24,7 +33,7 @@ services:
     expose:
       - 8080/tcp
     networks:
-      - grafananet      
+      - grafananet 
   node-prometheus:
     container_name: ${COMPOSE_PROJECT_NAME}-prometheus
     restart: unless-stopped
