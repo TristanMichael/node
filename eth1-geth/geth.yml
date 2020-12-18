@@ -43,8 +43,6 @@ services:
       - --ws.origins=*
       - --metrics 
       - --metrics.expensive
-#      - --pprof 
-#      - --pprof.addr=0.0.0.0
     command: ${ETH1_NETWORK_FLAG}
 
   eth1-prometheus:
