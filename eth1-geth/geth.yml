@@ -24,7 +24,7 @@ services:
       - ${ETH1_PORT}:${ETH1_PORT}/udp
       - 127.0.0.1:${ETH1_WS_PORT}:${ETH1_WS_PORT}/tcp
       - 127.0.0.1:${ETH1_RPC_PORT}:${ETH1_RPC_PORT}/tcp
-    expose:
+#    expose:
 #      - 6060/tcp      
     entrypoint:
       - geth
