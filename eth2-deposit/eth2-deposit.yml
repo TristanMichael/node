@@ -16,10 +16,8 @@ services:
       - python3
       - /app/eth2deposit/deposit.py
       - new-mnemonic
-      - --folder
-      - /var/lib/depcli-data
-      - --chain
-      - ${NETWORK}
+      - --folder=/var/lib/depcli-data
+      - --chain=${NETWORK}
   deposit-cli-existing:
     restart: "no"
     user: ${LOCAL_UID}:${LOCAL_UID}
@@ -36,7 +34,5 @@ services:
       - python3
       - /app/eth2deposit/deposit.py
       - existing-mnemonic
-      - --folder
-      - /var/lib/depcli-data
-      - --chain
-      - ${NETWORK}
+      - --folder=/var/lib/depcli-data
+      - --chain=${NETWORK}
