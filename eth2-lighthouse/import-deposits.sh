@@ -1,1 +1,1 @@
-docker-compose -f lighthouse-import.yml up
+docker-compose -f commands.yml run validator-import
