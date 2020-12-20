@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+  validator-import:
+    container_name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}-import
+    restart: "no"
+    user: ${LOCAL_UID}:${LOCAL_UID}
+    image: node/lighthouse
+    volumes:
+      - lighthouse-vc-data:/var/lib/lighthouse
+      - ${DEPCLI_LOCALDIR}/validator_keys:/var/lib/lighthouse/validator_keys
+    entrypoint:
+      - lighthouse
+      - account
+      - validator
+      - import
+      - --datadir=/var/lib/lighthouse
+      - --directory=/var/lib/lighthouse/validator_keys
+      - --network=${ETH2_NETWORK}
+      - --debug-level=${LOG_LEVEL}
+
+volumes:
+  lighthouse-vc-data:
+    name: ${COMPOSE_PROJECT_NAME}-${CLIENT_NAME}-vc-data
