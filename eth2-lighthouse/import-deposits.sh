@@ -1,1 +1,1 @@
-docker-compose up -f lighthouse-import.yml
+docker-compose -f lighthouse-import.yml up
