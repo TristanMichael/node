@@ -55,7 +55,7 @@ services:
       - lighthouse
       - validator
       - --datadir=/var/lib/lighthouse
-      - --beacon-node=${ETH2_NODE}
+      - --beacon-nodes=${ETH2_NODE}
       - --graffiti=${GRAFFITI}
       - --network=${ETH2_NETWORK}
       - --debug-level=${LOG_LEVEL}
