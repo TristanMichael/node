@@ -4,7 +4,6 @@ services:
   node-exporter:
     container_name: ${COMPOSE_PROJECT_NAME}-node
 #    privileged: true
-    user: ${LOCAL_UID}:${LOCAL_UID}
     restart: unless-stopped
     image: prom/node-exporter
     networks:
@@ -22,8 +21,7 @@ services:
       - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
   cadvisor:
     container_name: ${COMPOSE_PROJECT_NAME}-cadvisor
-    #privileged: true
-    user: ${LOCAL_UID}:${LOCAL_UID}
+    privileged: true
     restart: unless-stopped
     image: google/cadvisor
     volumes:
