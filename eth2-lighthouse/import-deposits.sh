@@ -1,1 +1,1 @@
-docker volume rm eth2-mainnet-lighthouse-vc-data && docker-compose -f commands.yml run validator-import
+docker volume rm eth2-testnet-lighthouse-vc-data && docker-compose -f commands.yml run validator-import
